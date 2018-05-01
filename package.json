@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "generator.js",
-  "directories": {
-    "src": "src"
-  },
   "scripts": {
     "test": "jasmine"
   },

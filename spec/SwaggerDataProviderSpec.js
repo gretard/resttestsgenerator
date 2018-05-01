@@ -1,6 +1,5 @@
 describe("SwaggerDataProvider", function () {
-    var generator = require('./../src/generator');
-      
+    var generator = require('./../generator');
         
       beforeEach(function () {
       

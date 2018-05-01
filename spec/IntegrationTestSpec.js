@@ -1,5 +1,5 @@
 describe("GeneratorTest", function () {
-    var generator = require('./../src/generator');
+    var generator = require('./../generator');
       
    
       beforeEach(function () {

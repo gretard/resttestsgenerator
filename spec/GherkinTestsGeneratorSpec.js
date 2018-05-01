@@ -1,5 +1,5 @@
 describe("GherkinGivenStatementsGenerator", function () {
-    var generator = require('./../src/generator');
+    var generator = require('./../generator');
       var objGenerator;
         
       beforeEach(function () {

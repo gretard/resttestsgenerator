@@ -1,0 +1,2 @@
+# resttestsgenerator
+Rest tests generator

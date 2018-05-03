@@ -2,7 +2,7 @@
   "name": "resttestsgenerator",
   "version": "1.0.0",
   "description": "",
-  "main": "generator.js",
+  "main": "index.js",
   "scripts": {
     "test": "jasmine"
   },

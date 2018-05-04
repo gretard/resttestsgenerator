@@ -15,7 +15,7 @@ var generator = require('resttestsgenerator');
 var genResults = generate.generateFromSwagger('http://urltoswaggerdef/swagger.json'); 
 ```
 
-This example will generate both Gherkin an postman results.
+This example will generate both Gherkin and Postman results.
 
 ### Generating from swagger object ###
 ```

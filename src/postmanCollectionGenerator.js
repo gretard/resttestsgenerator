@@ -1,7 +1,25 @@
 const _ = require('lodash');
-const pathHelper = require('./pathHelper');
 
 const objsGenerator = require('./objsGenerator');
+
+
+function getPath(path) {
+    var paths = [];
+
+    _.forEach(path.split('/'), function (path) {
+        if (path.length == 0) {
+            return;
+        }
+
+        if (path.startsWith("{")) {
+            paths.push("{" + path + "}");
+            return;
+        }
+        paths.push(path);
+    });
+    return paths;
+}
+
 
 function generateBody(testCase, defs) {
     var index = _.findIndex(testCase.params, ['in', 'body']);
@@ -41,7 +59,7 @@ function innerGenerate(request) {
     _.forEach(testSuites, function (testSuite, testSuiteKey) {
         var tests = [];
         _.forEach(testSuite.tests, function (testCase, testCaseKey) {
-            var path = pathHelper.getPath(testCase.path);
+            var path = getPath(testCase.path);
             var code = testCase.code;
             var headers = testCase.headers;
             var basePath = path.join('/');

@@ -8,7 +8,7 @@ function generate(request) {
     var testSuites = request.testSuites;
     var name = request.name;
   
-    var envFile = postmanEnvGenerator.generate(testSuites);
+    var envFile = postmanEnvGenerator.generate(request);
     var collectionFile = postmanCollectionGenerator.generate(request);
 
     

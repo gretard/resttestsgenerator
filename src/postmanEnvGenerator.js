@@ -1,31 +1,8 @@
 const _ = require('lodash');
-const pathHelper = require('./pathHelper');
 
-function innerGenerate(testSuites) {
+function generate(request) {
     var values = [];
-   
-    values.push(
-        {
-            "key": "url",
-            "value": "TODO",
-            "enabled": true,
-            "type": "text"
-        }
-    );
-    var names = [];
-    _.forEach(testSuites, function (testSuite, testSuiteKey) {
-        _.forEach(testSuite.tests, function (testCase, testCaseKey) {
-            var paths = pathHelper.getPath(testCase.path);
-            _.forEach(paths, function (path) {
-                if (path.startsWith("{")) {
-                    var tmp = path.replace("{{", "").replace("}}", "");
-                    if (names.indexOf(tmp) == -1) {
-                        names.push(tmp);
-                    }
-                }
-            });
-        });
-    });
+    var names = request.variables;
     _.forEach(names, function (name) {
         values.push(
             {
@@ -37,18 +14,16 @@ function innerGenerate(testSuites) {
     });
 
 
-    return {
+    var vars = {
         "name": "TEST",
         "_postman_variable_scope": "environment",
         "values": values
     };
-}
-function generate(testSuites) {
 
     return {
         "name": "Environment file contents",
         "filename": "env.collection.json",
-        "contents": `\r\n${JSON.stringify(innerGenerate(testSuites), null, 1)}`,
+        "contents": `\r\n${JSON.stringify(vars, null, 1)}`,
         "lang": "javascript"
     }
 }

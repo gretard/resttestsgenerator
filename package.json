@@ -1,0 +1,21 @@
+{
+  "name": "resttestsgenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "files": [ 
+    "src"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "swagger-parser": "^4.1.0",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0"
+  }
+}

@@ -94,7 +94,7 @@ function getTestSuites(data, options) {
                     }
                 });
                 if (paramsQuery.length > 1) {
-                    opPath = `${opPath}?${paramsQuery.substr(0, paramsQuery.lastIndexOf("&")-1)}`;
+                    opPath = `${opPath}?${paramsQuery.substr(0, paramsQuery.lastIndexOf("&"))}`;
                 }
 
                 var params = methodDesc.parameters || [];

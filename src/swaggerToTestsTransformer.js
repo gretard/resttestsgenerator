@@ -87,11 +87,15 @@ function getTestSuites(data, options) {
                     return;
                 }
                 var opPath = path;
+                var paramsQuery = "";
                 _.forEach(methodDesc.parameters, function (param) {
                     if (param.in == 'query') {
-                        opPath += `?${param.name}={${param.name}}`;
+                        paramsQuery += `${param.name}={${param.name}}&`;
                     }
                 });
+                if (paramsQuery.length > 0) {
+                    opPath = `${opPath}?${paramsQuery.substr(0, opPath.lastIndexOf("&"))}`;
+                }
 
                 var params = methodDesc.parameters || [];
                 tests.push(

@@ -1,5 +1,5 @@
 # Rest tests generator
-A library to generate Postman or Gherkin tests. Library reads all paths, methods and responses and for each pair generates tests.
+A library to generate Postman or Gherkin tests. Library reads all paths, methods and responses and for each pair generates tests. You can checkout demo at https://gretard.github.io/resttestsgenerator/
 
 ## Installation ##
 

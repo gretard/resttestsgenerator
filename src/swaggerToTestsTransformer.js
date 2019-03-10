@@ -93,8 +93,8 @@ function getTestSuites(data, options) {
                         paramsQuery += `${param.name}={${param.name}}&`;
                     }
                 });
-                if (paramsQuery.length > 0) {
-                    opPath = `${opPath}?${paramsQuery.substr(0, opPath.lastIndexOf("&"))}`;
+                if (paramsQuery.length > 1) {
+                    opPath = `${opPath}?${paramsQuery.substr(0, paramsQuery.lastIndexOf("&"))}`;
                 }
 
                 var params = methodDesc.parameters || [];

@@ -56,8 +56,8 @@ function getGlobalVariables(data) {
     if (data.securityDefinitions && data.securityDefinitions.api_key) {
         variables.push("apiKey");
     }
-    _.forEach(data.paths, function (pathDesc, path) {
-        _.forEach(pathDesc, function (methodDesc, methodName) {
+    _.forEach(data.paths, function (pathDesc) {
+        _.forEach(pathDesc, function (methodDesc) {
             _.forEach(methodDesc.parameters, function (param) {
                 if (param.in == 'query' || param.in == 'path') {
                     var name = param.name;
@@ -71,18 +71,20 @@ function getGlobalVariables(data) {
     return variables;
 }
 function getTestSuites(data, options) {
-    var self = this;
     var testSuites = [];
     var codes = options.codes || [];
     var methods = options.methods || [];
+    var paths = options.paths || [];
     _.forEach(data.paths, function (value, path) {
 
         var tests = [];
         _.forEach(value, function (methodDesc, methodName) {
             _.forEach(methodDesc.responses, function (codeDesc, codeName) {
                 var code = getStatusCode(codeName)
-                if ((codes.length != 0 && codes.indexOf(code) < 0)
+                if (
+                    (codes.length != 0 && codes.indexOf(code) < 0)
                     || (methods.length != 0 && methods.indexOf(methodName) < 0)
+                    || (paths.length != 0 && paths.indexOf(path) < 0)
                 ) {
                     return;
                 }
@@ -133,12 +135,12 @@ function getTestSuites(data, options) {
 }
 function transform(request) {
 
-    var options = request.options || { codes: [], methods: [] };
+    var options = request.options || { codes: [], methods: [], paths: [] };
     var data = request.apiDefinition || {};
     var testSuites = getTestSuites(data, options);
     var title = data && data.info && data.info.title ? data.info.title : "Service";
     var version = data && data.info && data.info.version ? ` v${data.info.version}` : "";
-    var variables = getGlobalVariables(data);;
+    var variables = getGlobalVariables(data);
 
 
     return {

@@ -4,62 +4,90 @@ A library to generate Postman or Gherkin tests. Library reads all paths, methods
 ## Installation ##
 
 ```
-npm install github:gretard/resttestsgenerator
+npm install github:gretard/resttestsgenerator#1.0.0
 ```
 
 ## Usage ##
 
 ### Generating from url ###
 ```
-var generator = require('resttestsgenerator');
-var genResults = generate.generateFromSwagger('http://urltoswaggerdef/swagger.json'); 
+const generator = require('resttestsgenerator');
+const genResults = generator.generateFromSwagger('https://petstore.swagger.io/v2/swagger.json'); 
+genResults.then(generatedResults=> {
+    generatedResults.results.forEach(result => {
+        console.log(result);  
+    });
+});
 ```
 
 This example will generate both Gherkin and Postman results.
 
-### Generating from swagger object ###
+### Generating Gherkin template from swagger object ###
 ```
 // or you can pass definition directly
-var generator = require('resttestsgenerator');
-var results = generate.generateFromSwagger(JSON.stringify({
-      swagger: "2.0",
-      info: {
+const generator = require('resttestsgenerator');
+const genResults = generator.generateFromSwagger(JSON.stringify({
+    swagger: "2.0",
+    info: {
         title: "Test service",
         version: "1.0.0"
-      },
-      paths: {
+    },
+    paths: {
         "/health": {
-          "get": {
-            "summary": "Returns health status",
-            "responses": {
-              200: "OK",
-              500: "Internal system error"
-            },
-            "security": {
-
+            "get": {
+                "summary": "Returns health status",
+                "responses": {
+                    200: {
+                        "description": "OK"
+                    }
+                }
             }
-          }
+        },
+        "/state": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "available",
+                        "in": "formData",
+                        "type": "boolean"
+                    }
+                ],
+                "summary": "Returns health status",
+                "responses": {
+                    200: {
+                        "description": "OK"
+                    }
+                }
+            }
         }
-      }
-    }), {generators: ["Gherkin]}); 
+    }
+}), { generators: ["Gherkin"] });
 
-
+genResults.then(generatedResults => {
+    generatedResults.results.forEach(result => {
+        result.files.forEach(fileData => {
+            console.log(fileData.contents)
+        })
+    });
+});
 ```
-The last example will produce gherkin file with:
+The last example will produce gherkin output with:
 
 ```
 Feature: Test service v1.0.0
 
 
-Scenario: /health returns: undefined
+Scenario: /health returns: OK
 Given I have "unauthorized" request
 When I submit to "/health" using "get"
 Then I should receive "200" status code
 
 
-Scenario: /health returns: undefined
-Given I have "unauthorized" request
-When I submit to "/health" using "get"
-Then I should receive "500" status code
+Scenario: /state returns: OK
+Given I have "unauthorized" request with form data
+| Key | Value |
+| available | valueOfboolean |
+When I submit to "/state" using "post"
+Then I should receive "200" status code
 
 ```
